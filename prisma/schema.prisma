@@ -9,11 +9,12 @@ generator client {
 
 model Comment {
   id        Int     @id @default(autoincrement())
-  text      String
-  content   String?
+  text      String  @db.VarChar(512)
   approved  Boolean @default(false)
   author    User?   @relation("authorWritesComments", fields: [authorId], references: [id])
   authorId  Int?
+  post      Post?   @relation(fields: [postId], references: [id])
+  postId    Int?
   likers    User[]
 }
 
@@ -25,6 +26,7 @@ model Post {
   author    User?   @relation("authorWritesPosts", fields: [authorId], references: [id])
   authorId  Int?
   likers    User[]
+  comments  Comment[]
 }
 
 model User {
