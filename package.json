@@ -11,9 +11,13 @@
     "dev": "ts-node ./script.ts"
   },
   "dependencies": {
-    "@prisma/client": "^3.10.0"
+    "@prisma/client": "^3.10.0",
+    "axios": "^0.26.0"
   },
   "engines": {
     "node": ">=12.2.0"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

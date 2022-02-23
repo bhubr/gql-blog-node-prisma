@@ -26,3 +26,15 @@ On initialization:
     * `npx prisma migrate dev --name init`
     * See [using multiple `.env` files](https://www.prisma.io/docs/guides/development-environment/environment-variables/using-multiple-env-files) for test db setup
     * `npm i @prisma/client`
+
+## Seed db
+
+Add this to `package.json`:
+
+```
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  }
+```
+
+Then `npx prisma db seed` to run seed script.
