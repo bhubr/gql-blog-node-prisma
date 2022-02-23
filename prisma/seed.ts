@@ -189,11 +189,14 @@ const insertComments = async (
  */
 const seed = async (): Promise<void> => {
   const randomUsers = await fecthRandomUsers();
-  const insertedUsers = await insertUsers(randomUsers);
+  const users = await insertUsers(randomUsers);
   const fakePosts = await fecthPosts();
-  const insertedPosts = await insertPosts(fakePosts);
+  const posts = await insertPosts(fakePosts);
   const fakeComments = await fecthComments();
-  const insertedComments = await insertComments(fakeComments);
+  const comments = await insertComments(fakeComments);
+  console.log(
+    `Inserted ${users.length} users, ${posts.length} posts, ${comments.length} comments`
+  );
 };
 
 seed();

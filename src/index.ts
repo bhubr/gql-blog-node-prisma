@@ -3,26 +3,12 @@ import { PrismaClient } from '@prisma/client';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 
-import { resolvers } from "./prisma/generated/type-graphql";
+import { resolvers } from '../prisma/generated/type-graphql';
 
 const prisma = new PrismaClient();
 
 // A `main` function so that you can use async/await
 async function main() {
-  await prisma.user.deleteMany({});
-  await prisma.user.create({
-    data: {
-      name: `John ${Date.now()}`,
-      email: `john${Date.now()}@example.com`,
-      posts: {
-        create: [
-          { title: 'How to make an omelette', content: "Let's do it!" },
-          { title: 'How to eat an omelette', content: 'Yummy' },
-        ],
-      },
-    },
-  });
-
   const schema = await buildSchema({
     resolvers,
     validate: false,
@@ -36,7 +22,6 @@ async function main() {
   server.listen().then(({ url }) => {
     console.log(`🚀  Server ready at ${url}`);
   });
-
 }
 
 main()
