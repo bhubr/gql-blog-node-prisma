@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -7,18 +7,33 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Comment {
+  id        Int     @id @default(autoincrement())
+  text      String
+  content   String?
+  approved  Boolean @default(false)
+  author    User?   @relation("authorWritesComments", fields: [authorId], references: [id])
+  authorId  Int?
+  likers    User[]
+}
+
 model Post {
   id        Int     @id @default(autoincrement())
   title     String
-  content   String?
+  content   String? @db.VarChar(512)
   published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
+  author    User?   @relation("authorWritesPosts", fields: [authorId], references: [id])
   authorId  Int?
+  likers    User[]
 }
 
 model User {
   id    Int     @id @default(autoincrement())
   email String  @unique
   name  String?
-  posts Post[]
+  avatarUrl  String?
+  posts Post[]  @relation("authorWritesPosts")
+  comments Comment[] @relation("authorWritesComments")
+  likedPosts Post[]
+  likedComments Comment[]
 }
